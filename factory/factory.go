@@ -7,6 +7,9 @@ import (
 	controllercart "ecommerce-project/feature/cart/controller"
 	repositorycart "ecommerce-project/feature/cart/repository"
 	servicescart "ecommerce-project/feature/cart/services"
+	controllercheckout "ecommerce-project/feature/checkout/controller"
+	repositorycheckout "ecommerce-project/feature/checkout/repository"
+	servicescheckout "ecommerce-project/feature/checkout/services"
 	controller "ecommerce-project/feature/product/controller"
 	repository "ecommerce-project/feature/product/repository"
 	services "ecommerce-project/feature/product/services"
@@ -34,5 +37,9 @@ func InitFact(e *echo.Echo, db *gorm.DB) {
 	cartrepo := repositorycart.New(db)
 	cartserv := servicescart.New(cartrepo)
 	controllercart.New(e, cartserv)
+
+	checkrepo := repositorycheckout.New(db)
+	checkserv := servicescheckout.New(checkrepo)
+	controllercheckout.New(e, checkserv)
 
 }

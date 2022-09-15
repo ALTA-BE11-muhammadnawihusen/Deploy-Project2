@@ -1,25 +1,45 @@
 package controller
 
-// import (
-// 	"ecommerce-project/feature/checkout/entities"
-// 	"ecommerce-project/middlewares"
+import (
+	"ecommerce-project/feature/checkout/entities"
+	"ecommerce-project/middlewares"
+	"ecommerce-project/utils/helper"
+	"net/http"
 
-// 	"github.com/labstack/echo/v4"
-// )
+	"github.com/labstack/echo/v4"
+)
 
-// type Delivery struct {
-// 	FromTo entities.ServiceInterface
-// }
+type Delivery struct {
+	FromTo entities.ServiceInterface
+}
 
-// func New(e *echo.Echo, data entities.ServiceInterface) {
-// 	handler := &Delivery{
-// 		FromTo: data,
-// 	}
+func New(e *echo.Echo, data entities.ServiceInterface) {
+	handler := &Delivery{
+		FromTo: data,
+	}
 
-// 	e.PUT("/checkout", handler.CheckHist, middlewares.JWTMiddleware())
+	e.POST("/checkout", handler.CheckHist, middlewares.JWTMiddleware())
 
-// }
+}
 
-// func (user *Delivery) CheckHist(c echo.Context) error {
-// 	userid := middlewares.ExtractToken(c)
-// }
+func (user *Delivery) CheckHist(c echo.Context) error {
+	userid := middlewares.ExtractToken(c)
+	var check CheckOutRequest
+	errb := c.Bind(&check)
+	if errb != nil {
+		return c.JSON(http.StatusBadRequest, helper.Failed("Gagal Bind Data"))
+	}
+
+	if check.Tombol == "pay" || check.Tombol == "cancel" {
+		// fmt.Println("=====Test1=====")
+		corecheck := RequestCheckToCore(check)
+		msg, err := user.FromTo.GetToHistory(userid, corecheck)
+		if err != nil {
+			return c.JSON(http.StatusInternalServerError, err)
+		}
+
+		return c.JSON(http.StatusOK, helper.Success(msg))
+	}
+
+	return c.JSON(http.StatusBadRequest, helper.Failed("Tolong pilih pay Or cancel"))
+}

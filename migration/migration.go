@@ -11,8 +11,6 @@ func InitialMigration(db *gorm.DB) {
 	db.AutoMigrate(&model.Category{})
 	db.AutoMigrate(&model.Product{})
 	db.AutoMigrate(&model.Cart{})
-	// db.AutoMigrate(&model.Order{})
-	// db.AutoMigrate(&model.AddressRequest{})
-	// db.AutoMigrate(&model.ListOrder{})
-
+	db.AutoMigrate(&model.CheckOut{})
+	db.AutoMigrate(&model.OrderHistory{})
 }

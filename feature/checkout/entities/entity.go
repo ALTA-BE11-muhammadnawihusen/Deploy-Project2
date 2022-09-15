@@ -1,21 +1,20 @@
 package entities
 
-type CheckOut struct {
+type CoreCheckOut struct {
 	ID      uint
-	CartID  Cart
 	Address string
 	Payment string
 	Qty     int
 	Total   int
 	Tombol  string
+	UserID  uint
 }
 
-type OrderHistory struct {
-	Foto   string
-	Name   string
+type CoreOrderHistory struct {
 	Qty    int
 	Total  int
 	Status string
+	UserID uint
 }
 
 type Cart struct {

@@ -45,6 +45,9 @@ func (user *Delivery) Login(c echo.Context) error {
 	if errbind != nil {
 		return c.JSON(http.StatusBadRequest, helper.Failed("Gagal Bind Data"))
 	}
+	if login.Email == "" || login.Password == "" {
+		return c.JSON(http.StatusBadRequest, helper.Failed("Email/Password tidak boleh kosong"))
+	}
 	core := login.ReqToCoreLogin()
 	token, err := user.FromTo.Login(core.Email, core.Password)
 	if err != nil {

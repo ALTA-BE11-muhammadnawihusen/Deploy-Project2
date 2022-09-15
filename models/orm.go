@@ -3,6 +3,7 @@ package models
 import (
 	auth "ecommerce-project/feature/auth/entities"
 	cart "ecommerce-project/feature/cart/entities"
+	check "ecommerce-project/feature/checkout/entities"
 	product "ecommerce-project/feature/product/entities"
 	"ecommerce-project/feature/user/entities"
 )
@@ -106,4 +107,32 @@ func ModelCartToCoreList(data []Cart) []cart.CoreCart {
 	}
 
 	return list
+}
+
+func CoreCartToCoreCart(data cart.CoreCart) check.Cart {
+	return check.Cart{
+		UserID:       data.UserID,
+		ProductName:  data.ProductName,
+		Productimage: data.Productimage,
+		ProductPrice: data.ProductPrice,
+		Quantity:     data.Quantity,
+		ProductID:    data.ProductID,
+	}
+}
+func CoreCartToCoreartList(data []cart.CoreCart) []check.Cart {
+	var list []check.Cart
+	for _, v := range data {
+		list = append(list, CoreCartToCoreCart(v))
+	}
+	return list
+}
+
+func CoreCheckOutToModelCheckOut(data check.CoreCheckOut) CheckOut {
+	return CheckOut{
+		Address: data.Address,
+		Payment: data.Payment,
+		Qty:     data.Qty,
+		Total:   data.Total,
+		Tombol:  data.Tombol,
+	}
 }
