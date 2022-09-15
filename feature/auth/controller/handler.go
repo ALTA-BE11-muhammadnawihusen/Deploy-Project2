@@ -18,7 +18,7 @@ func New(e *echo.Echo, data entities.ServiceInterface) {
 	}
 
 	e.POST("/register", handler.Register)
-	e.GET("/login", handler.Login)
+	e.POST("/login", handler.Login)
 }
 
 func (user *Delivery) Register(c echo.Context) error {
