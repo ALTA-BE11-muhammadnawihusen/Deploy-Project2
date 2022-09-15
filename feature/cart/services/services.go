@@ -28,3 +28,16 @@ func (service *Service) AddToCart(userid, productid uint) (string, error) {
 
 	return msg, nil
 }
+
+func (service *Service) GetMyCart(userId uint) ([]entities.CoreCart, error) {
+	list, err := service.do.SelectMyCart(userId)
+	if err != nil {
+		return nil, err
+	}
+	return list, nil
+}
+
+func (service *Service) DeleteFromCart(CartId, UserId uint) (string, error) {
+	msg, err := service.do.DeleteFromCart(CartId, UserId)
+	return msg, err
+}

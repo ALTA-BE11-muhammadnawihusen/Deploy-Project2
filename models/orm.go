@@ -87,3 +87,23 @@ func CoreCartToModel(data cart.CoreCart) Cart {
 		ProductID:    data.ProductID,
 	}
 }
+
+func ModelCartToCore(data Cart) cart.CoreCart {
+	return cart.CoreCart{
+		ID:           data.ID,
+		ProductName:  data.ProductName,
+		Productimage: data.Productimage,
+		ProductPrice: data.ProductPrice,
+		Quantity:     data.Quantity,
+		ProductID:    data.ProductID,
+	}
+}
+
+func ModelCartToCoreList(data []Cart) []cart.CoreCart {
+	var list []cart.CoreCart
+	for _, v := range data {
+		list = append(list, ModelCartToCore(v))
+	}
+
+	return list
+}

@@ -19,7 +19,10 @@ func New(e *echo.Echo, data entities.ServiceInterface) {
 		FromTo: data,
 	}
 
-	e.POST("/profile/cart/:id", handler.AddCart, middlewares.JWTMiddleware())
+	e.POST("/cart/:id", handler.AddCart, middlewares.JWTMiddleware()) //idbarang
+	e.GET("/cart", handler.GetMyCart, middlewares.JWTMiddleware())
+	e.DELETE("/cart/:id", handler.Delete, middlewares.JWTMiddleware()) //idcart
+	// e.PUT("/cart/:id", handler.Update, middlewares.JWTMiddleware())
 }
 
 func (user *Delivery) AddCart(c echo.Context) error {
@@ -36,4 +39,31 @@ func (user *Delivery) AddCart(c echo.Context) error {
 	}
 
 	return c.JSON(http.StatusCreated, helper.Success(msg))
+}
+
+func (user *Delivery) GetMyCart(c echo.Context) error {
+	userid := middlewares.ExtractToken(c)
+	slicecore, err := user.FromTo.GetMyCart(uint(userid))
+	if err != nil {
+		return c.JSON(http.StatusInternalServerError, helper.Failed("Terjadi Kesalahan"))
+	}
+	resposeCart := CartCoreToResponseList(slicecore)
+
+	return c.JSON(http.StatusOK, helper.SuccessGet("Sukses Mendapatkan data", resposeCart))
+}
+
+func (user *Delivery) Delete(c echo.Context) error {
+	userid := middlewares.ExtractToken(c)
+	cartid, err := strconv.Atoi(c.Param("id"))
+	// fmt.Println(idproduct)
+	if err != nil {
+		return c.JSON(http.StatusBadRequest, helper.Failed("Parameter must be number"))
+	}
+
+	msg, errs := user.FromTo.DeleteFromCart(uint(cartid), uint(userid))
+	if errs != nil {
+		return c.JSON(http.StatusInternalServerError, helper.Failed(msg))
+	}
+
+	return c.JSON(http.StatusOK, helper.Success(msg))
 }

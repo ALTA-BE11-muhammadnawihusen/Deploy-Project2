@@ -19,8 +19,6 @@ func New(db *gorm.DB) entities.RepositoryInterface {
 	}
 }
 
-// GetData(productId uint) (entities.CoreProduct, error)
-// AddToCart(data CoreCart) (string, error)
 func (storage *Storage) GetData(productid uint) (product.CoreProduct, error) {
 	var model models.Product
 	tx := storage.query.Find(&model, "id = ?", productid)
@@ -41,4 +39,24 @@ func (storage *Storage) AddToCart(data entities.CoreCart) (string, error) {
 
 	fmt.Println(model)
 	return "Sukses Menambahkan ke Cart", nil
+}
+
+func (storage *Storage) SelectMyCart(userId uint) ([]entities.CoreCart, error) {
+	var data []models.Cart
+	tx := storage.query.Find(&data, "user_id = ?", userId)
+	if tx.Error != nil {
+		return nil, tx.Error
+	}
+
+	corelist := models.ModelCartToCoreList(data)
+	return corelist, nil
+}
+
+func (storage *Storage) DeleteFromCart(cartId, userId uint) (string, error) {
+	tx := storage.query.Where("user_id = ? and id = ?", userId, cartId).Delete(&models.Cart{})
+	if tx.Error != nil || tx.RowsAffected != 1 {
+		return "Gagal Menghapus", tx.Error
+	}
+
+	return "Sukses Menghapus Dari Cart", nil
 }

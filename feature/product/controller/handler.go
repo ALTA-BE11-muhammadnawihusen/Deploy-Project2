@@ -22,11 +22,11 @@ func New(e *echo.Echo, data entities.ServiceInterface) {
 		FromTo: data,
 	}
 
+	e.GET("/profile/product", handler.GetMyProduct, middlewares.JWTMiddleware())
+	e.PUT("/profile/product/:id", handler.UpdateProduct, middlewares.JWTMiddleware())
 	e.POST("/product", handler.AddProduct, middlewares.JWTMiddleware())
 	e.GET("/product", handler.Get8All)
 	e.GET("/product/:id", handler.Detail)
-	e.GET("/profile/product", handler.GetMyProduct, middlewares.JWTMiddleware())
-	e.PUT("/profile/product/:id", handler.UpdateProduct, middlewares.JWTMiddleware())
 	e.DELETE("/product/:id", handler.DeleteProduct, middlewares.JWTMiddleware())
 }
 
