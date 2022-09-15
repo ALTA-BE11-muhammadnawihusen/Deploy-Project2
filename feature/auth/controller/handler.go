@@ -27,6 +27,9 @@ func (user *Delivery) Register(c echo.Context) error {
 	if errbind != nil {
 		return c.JSON(http.StatusBadRequest, helper.Failed("Failed to Bind Data"))
 	}
+	if request.Email == "" || request.Password == "" || request.Username == "" {
+		return c.JSON(http.StatusBadRequest, helper.Failed("Email/Password/Username Harus Diisi"))
+	}
 	core := request.ReqToCore()
 	row, err := user.FromTo.FirstRegister(core)
 	if err != nil || row != 1 {
