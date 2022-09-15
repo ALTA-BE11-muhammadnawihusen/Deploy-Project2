@@ -60,3 +60,19 @@ func (storage *Storage) DeleteFromCart(cartId, userId uint) (string, error) {
 
 	return "Sukses Menghapus Dari Cart", nil
 }
+
+func (storage *Storage) UpdateTO(cartid, userid, add int) (string, error) {
+	// var qty models.Cart
+	tx := storage.query.Model(&models.Cart{}).Where("id = ? and user_id = ?", cartid, userid).Update("quantity", add)
+	if tx.Error != nil || tx.RowsAffected != 1 {
+		return "Terjadi Kesalahan", tx.Error
+	}
+
+	return "Sukses Update Data", nil
+}
+
+// model := models.CoreToModel(core)
+// tx := storage.query.Model(&model).Where("id = ?", idproduct).Updates(model)
+// if tx.Error != nil || tx.RowsAffected != 1 {
+// 	return "Gagal Update", tx.Error
+// }

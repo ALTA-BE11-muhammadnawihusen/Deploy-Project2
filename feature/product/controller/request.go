@@ -7,7 +7,7 @@ type Request struct {
 	Price       int    `json:"price" form:"price"`
 	Foto        string `json:"foto" form:"foto"`
 	Description string `json:"description" form:"description"`
-	Category    uint   `json:"category" form:"category"`
+	CategoryID  uint   `json:"categoryid" form:"categoryid"`
 	Quantity    uint   `json:"quantity" form:"quantity"`
 }
 
@@ -17,7 +17,7 @@ func (Req *Request) ReqToCore(userid uint) entities.CoreProduct {
 		Price:       Req.Price,
 		Foto:        Req.Foto,
 		Description: Req.Description,
-		CategoryID:  Req.Category,
+		CategoryID:  Req.CategoryID,
 		Quantity:    Req.Quantity,
 		UserID:      userid,
 	}

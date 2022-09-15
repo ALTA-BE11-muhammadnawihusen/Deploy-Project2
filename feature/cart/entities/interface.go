@@ -6,6 +6,7 @@ type ServiceInterface interface {
 	AddToCart(userid, productId uint) (string, error)
 	GetMyCart(userid uint) ([]CoreCart, error)
 	DeleteFromCart(cartid, userid uint) (string, error)
+	UpdateTO(cartid, userid, add int) (string, error)
 }
 
 type RepositoryInterface interface {
@@ -13,4 +14,5 @@ type RepositoryInterface interface {
 	AddToCart(data CoreCart) (string, error)
 	SelectMyCart(userid uint) ([]CoreCart, error)
 	DeleteFromCart(cartid, userid uint) (string, error)
+	UpdateTO(cartid, userid, add int) (string, error)
 }

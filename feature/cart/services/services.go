@@ -41,3 +41,8 @@ func (service *Service) DeleteFromCart(CartId, UserId uint) (string, error) {
 	msg, err := service.do.DeleteFromCart(CartId, UserId)
 	return msg, err
 }
+
+func (service *Service) UpdateTO(cartid, userid, add int) (string, error) {
+	msg, err := service.do.UpdateTO(cartid, userid, add)
+	return msg, err
+}

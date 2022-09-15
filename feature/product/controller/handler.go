@@ -26,6 +26,7 @@ func New(e *echo.Echo, data entities.ServiceInterface) {
 	e.PUT("/profile/product/:id", handler.UpdateProduct, middlewares.JWTMiddleware())
 	e.POST("/product", handler.AddProduct, middlewares.JWTMiddleware())
 	e.GET("/product", handler.Get8All)
+	e.GET("/product:category", handler.GetByCategory)
 	e.GET("/product/:id", handler.Detail)
 	e.DELETE("/product/:id", handler.DeleteProduct, middlewares.JWTMiddleware())
 }
@@ -169,4 +170,20 @@ func (user *Delivery) Detail(c echo.Context) error {
 	}
 
 	return c.JSON(http.StatusOK, helper.SuccessGet("Sukses Mendapatkan product", core))
+}
+
+func (user *Delivery) GetByCategory(c echo.Context) error {
+	category, er := strconv.Atoi(c.Param("category"))
+	page, ers := strconv.Atoi(c.QueryParam("page"))
+
+	if er != nil || ers != nil {
+		return c.JSON(http.StatusBadRequest, helper.Failed("category must number"))
+	}
+	listcore, err := user.FromTo.GetType(category, page)
+	if err != nil {
+		return c.JSON(http.StatusBadRequest, helper.Failed("Terjadi Kesalahan"))
+	}
+	listRes := CoreToResponseList(listcore)
+
+	return c.JSON(http.StatusOK, helper.SuccessGet("Sukses mendapatkan data", listRes))
 }

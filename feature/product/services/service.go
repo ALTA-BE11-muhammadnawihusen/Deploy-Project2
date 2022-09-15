@@ -52,3 +52,8 @@ func (service *Service) GetAProduct(idproduct int) (entities.CoreProduct, error)
 	core, err := service.do.SelectAProduct(uint(idproduct))
 	return core, err
 }
+
+func (service *Service) GetType(category, page int) ([]entities.CoreProduct, error) {
+	core, err := service.do.GetType(category, page)
+	return core, err
+}

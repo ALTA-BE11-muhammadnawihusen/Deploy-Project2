@@ -3,6 +3,7 @@ package repository
 import (
 	"ecommerce-project/feature/product/entities"
 	"ecommerce-project/models"
+	"fmt"
 
 	"gorm.io/gorm"
 )
@@ -81,4 +82,17 @@ func (storage *Storage) UpdateMyProduct(core entities.CoreProduct, idproduct uin
 	}
 
 	return "Sukses Update", nil
+}
+
+func (storage *Storage) GetType(category, page int) ([]entities.CoreProduct, error) {
+	var data []models.Product
+	count := 8 * (page - 1)
+	fmt.Println(category)
+	tx := storage.query.Limit(8).Offset(count).Find(&data, "category_id = ?", category)
+	if tx.Error != nil {
+		return nil, tx.Error
+	}
+
+	corelist := models.ProductToCoreList(data)
+	return corelist, nil
 }

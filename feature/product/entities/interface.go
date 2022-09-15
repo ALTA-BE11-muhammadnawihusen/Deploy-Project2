@@ -7,6 +7,7 @@ type ServiceInterface interface {
 	UpdateMyProduct(core CoreProduct, idproduct uint) (string, error)
 	Delete(userid, deleteid int) (string, error)
 	GetAProduct(idproduct int) (CoreProduct, error)
+	GetType(category, page int) ([]CoreProduct, error)
 }
 
 type RepositoryInterface interface {
@@ -16,4 +17,5 @@ type RepositoryInterface interface {
 	UpdateMyProduct(core CoreProduct, idproduct uint) (string, error)
 	Delete(userid, deleteid int) (string, error)
 	SelectAProduct(idproduct uint) (CoreProduct, error)
+	GetType(category, page int) ([]CoreProduct, error)
 }
