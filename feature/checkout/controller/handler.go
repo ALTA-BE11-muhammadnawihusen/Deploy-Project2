@@ -19,7 +19,7 @@ func New(e *echo.Echo, data entities.ServiceInterface) {
 	}
 
 	e.POST("/checkout", handler.InsertCheckHist, middlewares.JWTMiddleware())
-	e.GET("/checkout", handler.CheckHist)
+	e.GET("/checkout", handler.CheckHist, middlewares.JWTMiddleware())
 
 }
 
