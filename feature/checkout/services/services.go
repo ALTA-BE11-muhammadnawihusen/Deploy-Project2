@@ -31,5 +31,10 @@ func (service *Service) GetToHistory(userid int, data entities.CoreCheckOut) (st
 
 }
 
+func (service *Service) GetHistory(userid int) ([]entities.CoreOrderHistory, error) {
+	list, err := service.do.SelectHistory(userid)
+	return list, err
+}
+
 // Qty     int
 // Total   int

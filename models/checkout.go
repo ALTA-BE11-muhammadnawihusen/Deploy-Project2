@@ -1,6 +1,10 @@
 package models
 
-import "gorm.io/gorm"
+import (
+	"time"
+
+	"gorm.io/gorm"
+)
 
 type CheckOut struct {
 	gorm.Model
@@ -13,8 +17,9 @@ type CheckOut struct {
 }
 
 type OrderHistory struct {
-	Qty    int
-	Total  int
-	Status string
-	UserID uint
+	Qty       int
+	Total     int
+	Status    string
+	UserID    uint
+	CreatedAt time.Time
 }

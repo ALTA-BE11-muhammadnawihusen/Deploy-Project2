@@ -18,11 +18,12 @@ func New(e *echo.Echo, data entities.ServiceInterface) {
 		FromTo: data,
 	}
 
-	e.POST("/checkout", handler.CheckHist, middlewares.JWTMiddleware())
+	e.POST("/checkout", handler.InsertCheckHist, middlewares.JWTMiddleware())
+	e.GET("/checkout", handler.CheckHist)
 
 }
 
-func (user *Delivery) CheckHist(c echo.Context) error {
+func (user *Delivery) InsertCheckHist(c echo.Context) error {
 	userid := middlewares.ExtractToken(c)
 	var check CheckOutRequest
 	errb := c.Bind(&check)
@@ -42,4 +43,16 @@ func (user *Delivery) CheckHist(c echo.Context) error {
 	}
 
 	return c.JSON(http.StatusBadRequest, helper.Failed("Tolong pilih pay Or cancel"))
+}
+
+func (user *Delivery) CheckHist(c echo.Context) error {
+	userid := middlewares.ExtractToken(c)
+
+	list, er := user.FromTo.GetHistory(userid)
+	if er != nil {
+		return c.JSON(http.StatusInternalServerError, helper.Failed("Terjadi Kesalahan"))
+	}
+
+	coreres := CoreToResponseHistList(list)
+	return c.JSON(http.StatusOK, helper.SuccessGet("behasil mendapatkan data", coreres))
 }

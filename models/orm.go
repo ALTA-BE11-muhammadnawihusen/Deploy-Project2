@@ -136,3 +136,21 @@ func CoreCheckOutToModelCheckOut(data check.CoreCheckOut) CheckOut {
 		Tombol:  data.Tombol,
 	}
 }
+
+func ModelsHistToCore(data OrderHistory) check.CoreOrderHistory {
+	return check.CoreOrderHistory{
+		Qty:    data.Qty,
+		Total:  data.Total,
+		Status: data.Status,
+		Time:   data.CreatedAt,
+	}
+}
+
+func ModelsHistToCoreList(data []OrderHistory) []check.CoreOrderHistory {
+	var hist []check.CoreOrderHistory
+	for _, v := range data {
+		hist = append(hist, ModelsHistToCore(v))
+	}
+
+	return hist
+}

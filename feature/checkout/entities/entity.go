@@ -1,5 +1,7 @@
 package entities
 
+import "time"
+
 type CoreCheckOut struct {
 	ID      uint
 	Address string
@@ -15,6 +17,7 @@ type CoreOrderHistory struct {
 	Total  int
 	Status string
 	UserID uint
+	Time   time.Time
 }
 
 type Cart struct {
