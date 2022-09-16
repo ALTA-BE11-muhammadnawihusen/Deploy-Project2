@@ -14,3 +14,5 @@ func InitialMigration(db *gorm.DB) {
 	db.AutoMigrate(&model.CheckOut{})
 	db.AutoMigrate(&model.OrderHistory{})
 }
+
+// my note
