@@ -6,18 +6,18 @@ import (
 )
 
 type Response struct {
-	Qty    int
-	Total  int
-	Status string
-	Time   time.Time
+	qty    int
+	total  int
+	status string
+	time   time.Time
 }
 
 func CoreToResponseHist(data entities.CoreOrderHistory) Response {
 	return Response{
-		Qty:    data.Qty,
-		Total:  data.Total,
-		Status: data.Status,
-		Time:   data.Time,
+		qty:    data.Qty,
+		total:  data.Total,
+		status: data.Status,
+		time:   data.Time,
 	}
 }
 

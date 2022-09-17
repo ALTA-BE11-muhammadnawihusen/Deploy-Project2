@@ -3,22 +3,22 @@ package controller
 import "ecommerce-project/feature/cart/entities"
 
 type CartResponse struct {
-	ID           uint
-	ProductName  string
-	Productimage string
-	ProductPrice int
-	Quantity     int
-	ProductID    uint
+	iD           uint
+	productName  string
+	productimage string
+	productPrice int
+	quantity     int
+	productID    uint
 }
 
 func CartCoreToResponse(data entities.CoreCart) CartResponse {
 	return CartResponse{
-		ID:           data.ID,
-		ProductName:  data.ProductName,
-		Productimage: data.Productimage,
-		ProductPrice: data.ProductPrice,
-		Quantity:     data.Quantity,
-		ProductID:    data.ProductID,
+		iD:           data.ID,
+		productName:  data.ProductName,
+		productimage: data.Productimage,
+		productPrice: data.ProductPrice,
+		quantity:     data.Quantity,
+		productID:    data.ProductID,
 	}
 }
 
