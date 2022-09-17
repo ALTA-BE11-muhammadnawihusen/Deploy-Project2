@@ -3,17 +3,17 @@ package controller
 import "ecommerce-project/feature/user/entities"
 
 type Response struct {
-	name     string
-	email    string
-	foto     string
-	username string
+	Name     string
+	Email    string
+	Foto     string
+	Username string
 }
 
 func CoreToResponse(core entities.CoreUser) Response {
 	return Response{
-		name:     core.Name,
-		email:    core.Email,
-		foto:     core.Foto,
-		username: core.Username,
+		Name:     core.Name,
+		Email:    core.Email,
+		Foto:     core.Foto,
+		Username: core.Username,
 	}
 }

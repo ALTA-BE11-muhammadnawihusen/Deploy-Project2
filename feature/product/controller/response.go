@@ -3,20 +3,20 @@ package controller
 import "ecommerce-project/feature/product/entities"
 
 type ResponseProduct struct {
-	iD       uint
-	name     string
-	price    int
-	foto     string
-	quantity uint
+	ID       uint
+	Name     string
+	Price    int
+	Foto     string
+	Quantity uint
 }
 
 func CoreToResponse(data entities.CoreProduct) ResponseProduct {
 	var response ResponseProduct
-	response.iD = data.ID
-	response.name = data.Name
-	response.price = data.Price
-	response.foto = data.Foto
-	response.quantity = data.Quantity
+	response.ID = data.ID
+	response.Name = data.Name
+	response.Price = data.Price
+	response.Foto = data.Foto
+	response.Quantity = data.Quantity
 
 	return response
 }
